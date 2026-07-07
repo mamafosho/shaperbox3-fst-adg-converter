@@ -5,43 +5,25 @@ import os
 # --- 1. 웹 UI 기본 설정 ---
 st.set_page_config(page_title="FST to ADG Converter", page_icon="🎵", layout="centered")
 
-# --- 2. 다크/라이트 모드 자동 적응 커스텀 CSS (강제 적용 버그 픽스) ---
+# --- 2. 다크 모드 전용 배경 및 텍스트 CSS ---
 st.markdown("""
     <style>
-    /* --------------------------------------
-       [라이트 모드 (기본)] 
-    -------------------------------------- */
-    /* Streamlit의 최신 배경 컨테이너를 직접 타겟팅하고 !important로 강제 적용 */
+    /* 전체 배경에 은은한 블러 그라데이션 적용 (다크 모드 베이스) */
     [data-testid="stAppViewContainer"], .stApp {
-        background-color: #FFFFFF !important;
+        background-color: #0E1117 !important;
         background-image: 
-            radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.25) 0px, transparent 40%),
-            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.20) 0px, transparent 40%) !important;
+            radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.15) 0px, transparent 40%),
+            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.12) 0px, transparent 40%) !important;
         background-attachment: fixed !important;
     }
     
-    .desc-text { font-size: 16px; color: #555555 !important; }
-    .warn-text { font-size: 14px; color: #007BCC !important; line-height: 1.6; font-weight: 500; }
-    .credit-text { text-align: center; font-size: 12px; color: #888888 !important; }
+    /* 텍스트 색상 클래스 */
+    .desc-text { font-size: 16px; color: #A0A0A0 !important; }
+    .warn-text { font-size: 14px; color: #5CC2F2 !important; line-height: 1.6; font-weight: 500; }
+    .credit-text { text-align: center; font-size: 12px; color: #606060 !important; }
     
     /* 상단 기본 헤더바 투명화 */
     [data-testid="stHeader"] { background: transparent !important; }
-
-    /* --------------------------------------
-       [다크 모드] 사용자의 기기가 다크 모드일 때 덮어씌워지는 설정 
-    -------------------------------------- */
-    @media (prefers-color-scheme: dark) {
-        [data-testid="stAppViewContainer"], .stApp {
-            background-color: #0E1117 !important;
-            background-image: 
-                radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.15) 0px, transparent 40%),
-                radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.12) 0px, transparent 40%) !important;
-        }
-        
-        .desc-text { color: #A0A0A0 !important; }
-        .warn-text { color: #5CC2F2 !important; } /* 시안 블루 */
-        .credit-text { color: #606060 !important; }
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -107,11 +89,11 @@ def process_fst_data(fst_bytes, template_xml):
 # --- 7. 메인 화면 렌더링 ---
 st.title(text["title"])
 
-# 설명 텍스트 (CSS 클래스 연동)
+# 설명 텍스트
 st.markdown(f"<div class='desc-text'>{text['desc']}</div>", unsafe_allow_html=True)
 st.write("")
 
-# 주의 문구 (CSS 클래스 연동)
+# 주의 문구
 st.markdown(f"<div class='warn-text'>{text['warn']}</div>", unsafe_allow_html=True)
 st.write("")
 
