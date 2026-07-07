@@ -17,10 +17,24 @@ st.markdown("""
         background-attachment: fixed !important;
     }
     
-    /* 텍스트 색상 클래스 */
+    /* 텍스트 색상 및 링크 클래스 */
     .desc-text { font-size: 16px; color: #A0A0A0 !important; }
     .warn-text { font-size: 14px; color: #5CC2F2 !important; line-height: 1.6; font-weight: 500; }
     .credit-text { text-align: center; font-size: 12px; color: #606060 !important; }
+    
+    /* 하단 로직 버전 이동 링크 디자인 */
+    .link-box { text-align: center; margin-bottom: 12px; }
+    .link-box a { 
+        font-size: 14px; 
+        color: #5CC2F2; 
+        text-decoration: none; 
+        font-weight: 600; 
+        transition: all 0.2s ease; 
+    }
+    .link-box a:hover { 
+        color: #FF4B4B; 
+        text-decoration: underline; 
+    }
     
     /* 상단 기본 헤더바 투명화 */
     [data-testid="stHeader"] { background: transparent !important; }
@@ -59,7 +73,8 @@ if st.session_state.lang == "KOR":
         "result": "### 변환 결과",
         "download": "⬇️ {filename} 다운로드",
         "error_no_vst": "'{filename}' 파일에서 VST 데이터를 찾을 수 없습니다.",
-        "error_no_template": "서버에 template.xml 파일이 없습니다. 개발자에게 문의하세요."
+        "error_no_template": "서버에 template.xml 파일이 없습니다. 개발자에게 문의하세요.",
+        "to_logic": "🍏 로직 프로(.aupreset) 버전으로 이동"
     }
 else:
     text = {
@@ -70,7 +85,8 @@ else:
         "result": "### Conversion Results",
         "download": "⬇️ Download {filename}",
         "error_no_vst": "Could not find VST data in '{filename}'.",
-        "error_no_template": "template.xml not found on the server. Contact the developer."
+        "error_no_template": "template.xml not found on the server. Contact the developer.",
+        "to_logic": "🍏 Go to Logic Pro (.aupreset) version"
     }
 
 # --- 6. 핵심 변환 로직 함수 ---
@@ -131,10 +147,13 @@ if uploaded_files:
         else:
             st.warning(text["error_no_vst"].format(filename=uploaded_file.name))
 
-# --- 8. 화면 맨 아래 서명(Credit) 추가 ---
+# --- 8. 화면 맨 아래 링크 및 서명(Credit) 추가 ---
 st.markdown(
-    """
+    f"""
     <br><br><br>
+    <div class='link-box'>
+        <a href="https://shaperbox3-fst-aupreset-converter.streamlit.app/" target="_blank">{text['to_logic']}</a>
+    </div>
     <div class='credit-text'>
         @mamafosho
     </div>
