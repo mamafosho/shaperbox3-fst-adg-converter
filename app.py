@@ -26,7 +26,7 @@ st.markdown("""
     .link-box { text-align: center; margin-bottom: 12px; }
     .link-box a { 
         font-size: 14px; 
-        color: #3063b0; 
+        color: #5685cc; 
         text-decoration: none; 
         font-weight: 600; 
         transition: all 0.2s ease; 
