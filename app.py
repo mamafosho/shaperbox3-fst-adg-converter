@@ -5,44 +5,25 @@ import os
 # --- 1. 웹 UI 기본 설정 ---
 st.set_page_config(page_title="FST to ADG Converter", page_icon="🎵", layout="centered")
 
-# --- 2. 다크/라이트 모드 자동 적응 커스텀 CSS ---
+# --- 2. 다크 모드 전용 배경 및 텍스트 CSS ---
 st.markdown("""
     <style>
-    /* --------------------------------------
-       [라이트 모드 (기본)] 
-    -------------------------------------- */
-    /* 라이트 모드일 때: 화사한 흰색 배경과 진한 그라데이션, 진한 텍스트 */
+    /* 전체 배경에 은은한 블러 그라데이션 적용 (다크 모드 베이스) */
     [data-testid="stAppViewContainer"], .stApp {
-        background-color: #FFFFFF !important;
+        background-color: #0E1117 !important;
         background-image: 
-            radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.25) 0px, transparent 40%),
-            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.20) 0px, transparent 40%) !important;
+            radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.15) 0px, transparent 40%),
+            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.12) 0px, transparent 40%) !important;
         background-attachment: fixed !important;
     }
     
-    .desc-text { font-size: 16px; color: #555555 !important; }
-    .warn-text { font-size: 14px; color: #007BCC !important; line-height: 1.6; font-weight: 500; }
-    .credit-text { text-align: center; font-size: 12px; color: #888888 !important; }
+    /* 텍스트 색상 클래스 */
+    .desc-text { font-size: 16px; color: #A0A0A0 !important; }
+    .warn-text { font-size: 14px; color: #5CC2F2 !important; line-height: 1.6; font-weight: 500; }
+    .credit-text { text-align: center; font-size: 12px; color: #606060 !important; }
     
     /* 상단 기본 헤더바 투명화 */
     [data-testid="stHeader"] { background: transparent !important; }
-
-    /* --------------------------------------
-       [다크 모드] 기기가 다크 모드일 때 자동 전환되는 설정
-    -------------------------------------- */
-    @media (prefers-color-scheme: dark) {
-        /* 다크 모드일 때: 어두운 배경과 은은한 그라데이션, 밝은 텍스트 */
-        [data-testid="stAppViewContainer"], .stApp {
-            background-color: #0E1117 !important;
-            background-image: 
-                radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.15) 0px, transparent 40%),
-                radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.12) 0px, transparent 40%) !important;
-        }
-        
-        .desc-text { color: #A0A0A0 !important; }
-        .warn-text { color: #5CC2F2 !important; } /* 시안 블루 */
-        .credit-text { color: #606060 !important; }
-    }
     </style>
 """, unsafe_allow_html=True)
 
