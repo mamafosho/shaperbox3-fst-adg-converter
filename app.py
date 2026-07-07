@@ -2,10 +2,8 @@ import streamlit as st
 import gzip
 import os
 
-# --- 웹 UI 기본 설정 ---
-st.set_page_config(page_title="FST to ADG Converter", page_icon="🎵")
+st.set_page_config(page_title="FST to ADG Converter", page_icon="🎵", layout="centered")
 
-# 1. 언어 상태(세션) 초기화: 처음 접속 시에만 브라우저 언어를 감지해서 기본값 설정
 if 'lang' not in st.session_state:
     headers = st.context.headers
     accept_language = headers.get("Accept-Language", "en")
@@ -15,24 +13,22 @@ if 'lang' not in st.session_state:
     else:
         st.session_state.lang = "ENG"
 
-# 2. 우측 상단 언어 토글 버튼 만들기 (화면을 8:2 비율로 쪼개서 오른쪽에 배치)
-col1, col2 = st.columns([8, 2])
+col1, col2 = st.columns([8.5, 1.5])
 with col2:
-    # 현재 한국어면 'ENG' 버튼을, 영어면 'KOR' 버튼을 띄워줍니다.
     if st.session_state.lang == "KOR":
-        if st.button("🌐 ENG"):
+        if st.button("🌐 ENG", use_container_width=True):
             st.session_state.lang = "ENG"
-            st.rerun() # 버튼을 누르면 화면을 즉시 새로고침하여 언어를 바꿈
+            st.rerun()
     else:
-        if st.button("🌐 KOR"):
+        if st.button("🌐 KOR", use_container_width=True):
             st.session_state.lang = "KOR"
             st.rerun()
 
-# 3. 선택된 언어에 따라 텍스트 분기 처리
 if st.session_state.lang == "KOR":
     text = {
         "title": "ShaperBox 3 프리셋 변환기",
         "desc": "FL Studio의 .fst 프리셋을 Ableton Live의 .adg 포맷으로 변환합니다.",
+        "warn": "⚠️ 주의: 변환하려는 .fst 파일(이펙트 체인) 내에 ShaperBox 3 외에 다른 플러그인이 함께 포함되어 있는 경우, 변환이 정상적으로 작동하지 않습니다. 반드시 ShaperBox 3 하나만 단독으로 로드된 프리셋을 사용해 주세요.",
         "upload": ".fst 파일들을 선택하거나 드래그 앤 드롭하세요",
         "result": "### 변환 결과",
         "download": "⬇️ {filename} 다운로드",
@@ -43,6 +39,7 @@ else:
     text = {
         "title": "ShaperBox 3 Preset Converter",
         "desc": "Convert FL Studio .fst presets to Ableton Live .adg format.",
+        "warn": "⚠️ Note: If the .fst file contains any other plugins in the chain besides ShaperBox 3, the conversion will not work properly. Please ensure that the preset only has a single instance of ShaperBox 3 loaded.",
         "upload": "Drag and drop or select .fst files",
         "result": "### Conversion Results",
         "download": "⬇️ Download {filename}",
@@ -50,7 +47,6 @@ else:
         "error_no_template": "template.xml not found on the server. Contact the developer."
     }
 
-# --- 변환 로직 ---
 def process_fst_data(fst_bytes, template_xml):
     start_idx = fst_bytes.find(b'#zip#')
     if start_idx == -1:
@@ -63,9 +59,27 @@ def process_fst_data(fst_bytes, template_xml):
     final_xml = template_xml.replace('{HEX_DATA}', formatted_hex)
     return final_xml
 
-# --- 메인 화면 렌더링 ---
 st.title(text["title"])
-st.write(text["desc"])
+
+st.markdown(f"<span style='font-size: 16px; color: #A0A0A0;'>{text['desc']}</span>", unsafe_allow_html=True)
+st.write("")
+
+st.markdown(
+    f"""
+    <div style='
+        font-size: 14px; 
+        color: #FF4B4B; 
+        background-color: rgba(255, 75, 75, 0.1); 
+        padding: 12px; 
+        border-radius: 8px; 
+        line-height: 1.6;
+    '>
+        {text['warn']}
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
+st.write("")
 
 template_path = 'template.xml'
 try:
@@ -97,3 +111,13 @@ if uploaded_files:
             )
         else:
             st.warning(text["error_no_vst"].format(filename=uploaded_file.name))
+
+st.markdown(
+    """
+    <br><br><br>
+    <div style='text-align: center; font-size: 12px; color: #606060;'>
+        @mamafosho
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
