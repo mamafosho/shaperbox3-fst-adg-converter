@@ -3,7 +3,7 @@ import gzip
 import os
 
 # --- 1. 웹 UI 기본 설정 ---
-st.set_page_config(page_title="FST to ADG Converter", page_icon="🎵", layout="centered")
+st.set_page_config(page_title="FST to ADG Converter", page_icon="logo.png", layout="centered")
 
 # --- 2. 다크 모드 전용 배경 및 텍스트 CSS ---
 st.markdown("""
