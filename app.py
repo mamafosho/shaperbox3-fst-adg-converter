@@ -26,7 +26,7 @@ st.markdown("""
     .link-box { text-align: center; margin-bottom: 12px; }
     .link-box a { 
         font-size: 14px; 
-        color: #5CC2F2; 
+        color: #3063b0; 
         text-decoration: none; 
         font-weight: 600; 
         transition: all 0.2s ease; 
@@ -74,7 +74,7 @@ if st.session_state.lang == "KOR":
         "download": "⬇️ {filename} 다운로드",
         "error_no_vst": "'{filename}' 파일에서 VST 데이터를 찾을 수 없습니다.",
         "error_no_template": "서버에 template.xml 파일이 없습니다. 개발자에게 문의하세요.",
-        "to_logic": "🍏 로직 프로(.aupreset) 버전으로 이동"
+        "to_logic": "로직 버전"
     }
 else:
     text = {
@@ -86,7 +86,7 @@ else:
         "download": "⬇️ Download {filename}",
         "error_no_vst": "Could not find VST data in '{filename}'.",
         "error_no_template": "template.xml not found on the server. Contact the developer.",
-        "to_logic": "🍏 Go to Logic Pro (.aupreset) version"
+        "to_logic": "for Logic"
     }
 
 # --- 6. 핵심 변환 로직 함수 ---
