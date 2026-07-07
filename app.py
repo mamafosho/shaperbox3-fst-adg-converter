@@ -11,12 +11,12 @@ st.markdown("""
     /* --------------------------------------
        [라이트 모드 (기본)] 
     -------------------------------------- */
-    /* 전체 배경 은은한 블러 그라데이션 (밝은 톤) */
+    /* 라이트 모드에서는 그라데이션 색상을 더 선명하고 화사하게(투명도 0.25, 0.2) 설정 */
     .stApp {
         background-color: #FFFFFF;
         background-image: 
-            radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.08) 0px, transparent 40%),
-            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.08) 0px, transparent 40%);
+            radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.25) 0px, transparent 40%),
+            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.20) 0px, transparent 40%);
         background-attachment: fixed;
     }
     
@@ -33,6 +33,7 @@ st.markdown("""
     @media (prefers-color-scheme: dark) {
         .stApp {
             background-color: #0E1117;
+            /* 다크 모드에서는 눈이 부시지 않게 차분하고 은은한 투명도(0.15, 0.12) 유지 */
             background-image: 
                 radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.15) 0px, transparent 40%),
                 radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.12) 0px, transparent 40%);
