@@ -5,44 +5,42 @@ import os
 # --- 1. 웹 UI 기본 설정 ---
 st.set_page_config(page_title="FST to ADG Converter", page_icon="🎵", layout="centered")
 
-# --- 2. 다크/라이트 모드 자동 적응 커스텀 CSS ---
+# --- 2. 다크/라이트 모드 자동 적응 커스텀 CSS (강제 적용 버그 픽스) ---
 st.markdown("""
     <style>
     /* --------------------------------------
        [라이트 모드 (기본)] 
     -------------------------------------- */
-    /* 라이트 모드에서는 그라데이션 색상을 더 선명하고 화사하게(투명도 0.25, 0.2) 설정 */
-    .stApp {
-        background-color: #FFFFFF;
+    /* Streamlit의 최신 배경 컨테이너를 직접 타겟팅하고 !important로 강제 적용 */
+    [data-testid="stAppViewContainer"], .stApp {
+        background-color: #FFFFFF !important;
         background-image: 
             radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.25) 0px, transparent 40%),
-            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.20) 0px, transparent 40%);
-        background-attachment: fixed;
+            radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.20) 0px, transparent 40%) !important;
+        background-attachment: fixed !important;
     }
     
-    /* 텍스트 색상 클래스 (라이트 모드용 진한 색상) */
-    .desc-text { font-size: 16px; color: #555555; }
-    .warn-text { font-size: 14px; color: #007BCC; line-height: 1.6; font-weight: 500; }
-    .credit-text { text-align: center; font-size: 12px; color: #888888; }
+    .desc-text { font-size: 16px; color: #555555 !important; }
+    .warn-text { font-size: 14px; color: #007BCC !important; line-height: 1.6; font-weight: 500; }
+    .credit-text { text-align: center; font-size: 12px; color: #888888 !important; }
     
-    header { background: transparent !important; }
+    /* 상단 기본 헤더바 투명화 */
+    [data-testid="stHeader"] { background: transparent !important; }
 
     /* --------------------------------------
        [다크 모드] 사용자의 기기가 다크 모드일 때 덮어씌워지는 설정 
     -------------------------------------- */
     @media (prefers-color-scheme: dark) {
-        .stApp {
-            background-color: #0E1117;
-            /* 다크 모드에서는 눈이 부시지 않게 차분하고 은은한 투명도(0.15, 0.12) 유지 */
+        [data-testid="stAppViewContainer"], .stApp {
+            background-color: #0E1117 !important;
             background-image: 
                 radial-gradient(at 10% 20%, rgba(47, 165, 114, 0.15) 0px, transparent 40%),
-                radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.12) 0px, transparent 40%);
+                radial-gradient(at 90% 80%, rgba(138, 43, 226, 0.12) 0px, transparent 40%) !important;
         }
         
-        /* 텍스트 색상 클래스 (다크 모드용 밝은 색상) */
-        .desc-text { color: #A0A0A0; }
-        .warn-text { color: #5CC2F2; } /* 시안 블루 */
-        .credit-text { color: #606060; }
+        .desc-text { color: #A0A0A0 !important; }
+        .warn-text { color: #5CC2F2 !important; } /* 시안 블루 */
+        .credit-text { color: #606060 !important; }
     }
     </style>
 """, unsafe_allow_html=True)
